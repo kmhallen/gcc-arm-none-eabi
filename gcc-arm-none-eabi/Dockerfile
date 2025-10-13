@@ -13,11 +13,11 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN cd /opt/ \
- && wget -q "https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz" \
- && echo "95c011cee430e64dd6087c75c800f04b9c49832cc1000127a92a97f9c8d83af4 arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
+ && wget -q "https://developer.arm.com/-/media/Files/downloads/gnu/14.2.rel1/binrel/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz" \
+ && echo "62a63b981fe391a9cbad7ef51b17e49aeaa3e7b0d029b36ca1e9c3b2a9b78823 arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
  && sha256sum --check arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
  && rm arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
- && tar -xf arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz \
- && rm arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz
+ && tar -xf arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz \
+ && rm arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz
 
-ENV PATH="/opt/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin:$PATH"
+ENV PATH="/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin:$PATH"
