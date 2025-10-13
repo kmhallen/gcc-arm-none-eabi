@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 # Install build tools
 RUN apt-get update \
@@ -13,11 +13,11 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN cd /opt/ \
- && wget -q "https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz" \
- && echo "12a2815644318ebcceaf84beabb665d0924b6e79e21048452c5331a56332b309 arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz.sha256asc \
- && sha256sum --check arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz.sha256asc \
- && tar -xf arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz \
- && rm arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz.sha256asc \
- && rm arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz
+ && wget -q "https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz" \
+ && echo "6cd1bbc1d9ae57312bcd169ae283153a9572bd6a8e4eeae2fedfbc33b115fdbb arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
+ && sha256sum --check arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
+ && rm arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
+ && tar -xf arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz \
+ && rm arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz
 
-ENV PATH="/opt/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi/bin:$PATH"
+ENV PATH="/opt/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin:$PATH"

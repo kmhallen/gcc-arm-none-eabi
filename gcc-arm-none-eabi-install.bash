@@ -4,8 +4,8 @@ set -e # Exit on failure
 # The gcc-arm-none-eabi debian packages are either out of date, not fully working, or not provided.
 # Instead download binary realease and package into debian file to install to /usr.
 
-VER=15:12.3-2023.07-9kmhallen
-URL=https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz
+VER=15:13.2-2023.10-9kmhallen
+URL=https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz
 echo "Creating gcc-arm-none-eabi debian package version $VER"
 
 echo "Entering temporary directory..."
@@ -28,7 +28,7 @@ if ! dpkg -s coreutils &>/dev/null; then
   echo "Installing coreutils"
   sudo apt install -y coreutils
 fi
-echo "12a2815644318ebcceaf84beabb665d0924b6e79e21048452c5331a56332b309 gcc-arm-none-eabi.tar" > gcc-arm-none-eabi.tar.sha256asc
+echo "6cd1bbc1d9ae57312bcd169ae283153a9572bd6a8e4eeae2fedfbc33b115fdbb gcc-arm-none-eabi.tar" > gcc-arm-none-eabi.tar.sha256asc
 sha256sum --check gcc-arm-none-eabi.tar.sha256asc
 rm gcc-arm-none-eabi.tar.sha256asc
 
@@ -40,18 +40,31 @@ echo "Generating debian package..."
 mkdir gcc-arm-none-eabi
 mkdir gcc-arm-none-eabi/DEBIAN
 mkdir gcc-arm-none-eabi/usr
-echo "Package: gcc-arm-none-eabi"          >  gcc-arm-none-eabi/DEBIAN/control
-echo "Version: $VER"                       >> gcc-arm-none-eabi/DEBIAN/control
-echo "Architecture: amd64"                 >> gcc-arm-none-eabi/DEBIAN/control
-echo "Maintainer: kmhallen"                >> gcc-arm-none-eabi/DEBIAN/control
-echo "Depends: libncursesw5, python3.8"    >> gcc-arm-none-eabi/DEBIAN/control
-echo "Description: Arm Embedded toolchain" >> gcc-arm-none-eabi/DEBIAN/control
+cat << EOF > gcc-arm-none-eabi/DEBIAN/control
+Package: gcc-arm-none-eabi
+Version: $VER
+Architecture: amd64
+Maintainer: kmhallen
+Depends: libncursesw5 | libncursesw6, python3.8
+Description: Arm Embedded toolchain
+EOF
 mv arm-gnu-toolchain-*-arm-none-eabi/* gcc-arm-none-eabi/usr/
 [ -d gcc-arm-none-eabi/usr/include/gdb ] && rm -r gcc-arm-none-eabi/usr/include/gdb
 [ -d gcc-arm-none-eabi/usr/share/doc ] && rm -r gcc-arm-none-eabi/usr/share/doc
 [ -d gcc-arm-none-eabi/usr/share/gdb ] && rm -r gcc-arm-none-eabi/usr/share/gdb
 [ -d gcc-arm-none-eabi/usr/share/info ] && rm -r gcc-arm-none-eabi/usr/share/info
 [ -d gcc-arm-none-eabi/usr/share/man/man7 ] && rm -r gcc-arm-none-eabi/usr/share/man/man7
+codename=`lsb_release -sc`
+if [ "$codename" = "noble" ]; then
+  echo "Adding symlinks for libncursesw.so.5 and libtinfo.so.5..."
+  mkdir gcc-arm-none-eabi/usr/lib/x86_64-linux-gnu
+  cd gcc-arm-none-eabi/usr/lib/x86_64-linux-gnu
+  ln -s libncursesw.so.6 libncursesw.so.5
+  ln -s libtinfo.so.6 libtinfo.so.5
+  cd - > /dev/null
+else
+  echo "No modifications necessary for `lsb_release -sd`"
+fi
 dpkg-deb --build --root-owner-group -Znone gcc-arm-none-eabi
 
 if ! dpkg -s python3.8 &>/dev/null; then
