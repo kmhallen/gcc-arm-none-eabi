@@ -21,7 +21,7 @@ if ! dpkg -s curl &>/dev/null; then
   echo "Installing curl"
   sudo apt install -y curl
 fi
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar "$URL"
+curl -fSL -o gcc-arm-none-eabi.tar "$URL"
 
 echo "Verifying..."
 if ! dpkg -s coreutils &>/dev/null; then
