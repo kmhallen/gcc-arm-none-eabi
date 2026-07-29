@@ -4,8 +4,8 @@ set -e # Exit on failure
 # The gcc-arm-none-eabi debian packages are either out of date, not fully working, or not provided.
 # Instead download binary realease and package into debian file to install to /usr.
 
-VER=15:15.2.rel1-9kmhallen
-URL=https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
+VER=15:15.3.rel1-9kmhallen
+URL=https://gitlab.arm.com/api/v4/projects/tooling%2Fgnu-toolchains-for-arm/packages/generic/gnu-toolchain/15.3.rel1/arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi.tar.xz
 echo "Creating gcc-arm-none-eabi debian package version $VER"
 
 echo "Entering temporary directory..."
@@ -28,7 +28,7 @@ if ! dpkg -s coreutils &>/dev/null; then
   echo "Installing coreutils"
   sudo apt install -y coreutils
 fi
-echo "597893282ac8c6ab1a4073977f2362990184599643b4c5ee34870a8215783a16 gcc-arm-none-eabi.tar" > gcc-arm-none-eabi.tar.sha256asc
+echo "563bebb2b97d53382b956d6ee1fe61e2cae26699901417234a37df505ef9b5fa gcc-arm-none-eabi.tar" > gcc-arm-none-eabi.tar.sha256asc
 sha256sum --check gcc-arm-none-eabi.tar.sha256asc
 rm gcc-arm-none-eabi.tar.sha256asc
 

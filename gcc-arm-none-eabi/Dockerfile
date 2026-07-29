@@ -13,11 +13,11 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN cd /opt/ \
- && wget -q "https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz" \
- && echo "597893282ac8c6ab1a4073977f2362990184599643b4c5ee34870a8215783a16 arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
+ && wget -q "https://gitlab.arm.com/api/v4/projects/tooling%2Fgnu-toolchains-for-arm/packages/generic/gnu-toolchain/15.3.rel1/arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi.tar.xz" \
+ && echo "563bebb2b97d53382b956d6ee1fe61e2cae26699901417234a37df505ef9b5fa arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi.tar.xz" > arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
  && sha256sum --check arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
  && rm arm-gnu-toolchain-x86_64-arm-none-eabi.tar.xz.sha256asc \
- && tar -xf arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz \
- && rm arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
+ && tar -xf arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi.tar.xz \
+ && rm arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi.tar.xz
 
-ENV PATH="/opt/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi/bin:$PATH"
+ENV PATH="/opt/arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi/bin:$PATH"
